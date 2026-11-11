@@ -304,6 +304,8 @@
   }
   .exec-photo svg{width:26px;height:26px;margin-bottom:3px;}
   .exec-photo span{font-size:0.62rem;letter-spacing:0.02em;}
+  .exec-photo.has-photo{border:0;padding:0;overflow:hidden;}
+  .exec-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
 
   .exec-fields{margin:0;text-align:left;}
   .exec-fields .field-row{
@@ -378,28 +380,41 @@
   .sponsor-tier:first-of-type{margin-top:8px;}
   .tier-label{
     font-family:'Public Sans',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.08em;
-    text-transform:uppercase;color:var(--rust);margin:0 0 14px 0;padding-bottom:10px;border-bottom:1px solid var(--line);
+    text-transform:uppercase;color:var(--rust);margin:0 0 14px 0;padding-bottom:10px;border-bottom:1px solid var(--line);text-align:center;
   }
-  .sponsor-row{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(var(--tile-min,180px),1fr));}
+  .sponsor-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
+  .sponsor-row .sponsor-card{flex:0 1 var(--tile-min,180px);}
+  #page-sponsors .section-head{text-align:center;margin-left:auto;margin-right:auto;}
+  #page-sponsors .section-head p{margin-left:auto;margin-right:auto;}
   .sponsor-card{
-    background:#fff;border:1px solid var(--line);border-radius:12px;height:var(--tile-h,100px);
+    background:#F6EEDA;border:1px solid var(--line);border-radius:12px;height:var(--tile-h,100px);
     display:flex;align-items:center;justify-content:center;padding:16px 20px;text-align:center;
   }
   .sponsor-card img{max-width:100%;max-height:74%;width:auto;height:auto;object-fit:contain;display:block;}
   .sponsor-card.on-dark{background:#1c1914;}
+  .sponsor-link{position:relative;text-decoration:none;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;}
+  .sponsor-link:hover,.sponsor-link:focus-visible{transform:translateY(-3px);border-color:var(--mallard);box-shadow:0 8px 18px rgba(26,23,18,0.14);}
+  .sponsor-link:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+  .visit-tag{
+    position:absolute;bottom:6px;right:8px;font-size:0.68rem;font-weight:600;letter-spacing:0.02em;
+    color:#F8F5EA;background:var(--mallard-deep);padding:2px 8px;border-radius:999px;
+    opacity:0;transform:translateY(3px);transition:opacity .15s ease,transform .15s ease;pointer-events:none;
+  }
+  .sponsor-link:hover .visit-tag,.sponsor-link:focus-visible .visit-tag{opacity:1;transform:translateY(0);}
+  @media (hover:none){ .visit-tag{opacity:1;transform:none;} }
   .sponsor-name{font-family:'Fraunces',serif;font-weight:600;color:#241B12;line-height:1.2;font-size:var(--name-size,1.05rem);}
   .tier-sportsman{--tile-min:300px;--tile-h:150px;--name-size:1.5rem;}
   .tier-silver{--tile-min:220px;--tile-h:116px;--name-size:1.2rem;}
   .tier-bronze{--tile-min:190px;--tile-h:100px;--name-size:1.05rem;}
   .tier-donor{--tile-min:170px;--tile-h:90px;--name-size:0.98rem;}
-  .supporter-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
+  .supporter-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
   .supporter-list li{
     background:var(--card-bg);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
     font-size:0.9rem;color:var(--ink);
   }
   @media (max-width:600px){
     .tier-sportsman{--tile-min:100%;--tile-h:120px;}
-    .tier-silver,.tier-bronze,.tier-donor{--tile-min:140px;}
+    .tier-silver,.tier-bronze,.tier-donor{--tile-min:calc(50% - 8px);}
   }
 
   .step-list{counter-reset:step;list-style:none;margin:0;padding:0;}
@@ -484,7 +499,7 @@
   <div class="page" id="page-home">
     <div class="ticker" id="ticker">
       <button type="button" class="ticker-slide" id="tickerSlide" aria-label="Go to the page for this announcement">
-        <span class="dot">🦆</span><span id="tickerText">General meetings every other week, 6 PM at the fire pit</span>
+        <span class="dot">🦆</span><span id="tickerText">General meetings every other Tuesday, 6 PM at the fire pit</span>
       </button>
       <button type="button" class="ticker-dots" id="tickerDots" aria-label="Show the next announcement">
         <span class="ticker-dot active"></span>
@@ -559,11 +574,15 @@
           </details>
           <details class="faq-item">
             <summary>How much are membership dues?</summary>
-            <p class="faq-answer">There's a small membership fee that supports chapter operations and conservation fundraising. The exact amount is announced each semester at meetings and on our social media.</p>
+            <p class="faq-answer">Student membership is $55 and includes a student ticket to our banquet.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I come to the banquet without being a member?</summary>
+            <p class="faq-answer">Yes. Individual banquet tickets are $45 and open to everyone, including friends, family, and alumni.</p>
           </details>
           <details class="faq-item">
             <summary>When and where do you meet?</summary>
-            <p class="faq-answer">General meetings are every other week during the school year at 6 PM at the fire pit. Dates are posted each semester on our Instagram and Facebook.</p>
+            <p class="faq-answer">General meetings are every other Tuesday during the school year at 6 PM at the fire pit. Dates are posted each semester on our Instagram and Facebook.</p>
           </details>
           <details class="faq-item">
             <summary>Do you organize hunting trips?</summary>
@@ -721,7 +740,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.2-9.5-9A5.5 5.5 0 0112 5.5 5.5 5.5 0 0121.5 12c-2.5 3.8-9.5 9-9.5 9z"/></svg>
             <div>
               <span class="label">Where we meet</span>
-              <span>The fire pit, every other week at 6 PM</span>
+              <span>The fire pit, every other Tuesday at 6 PM</span>
             </div>
           </div>
         </div>
@@ -783,7 +802,7 @@
           <li>
             <div>
               <h3>Pay chapter dues</h3>
-              <p>A small membership fee supports chapter operations and conservation fundraising — details are shared at meetings.</p>
+              <p>Student membership is $55 and includes a student ticket to the banquet. Not joining? Individual banquet tickets are $45 and open to everyone.</p>
             </div>
           </li>
           <li>
@@ -810,10 +829,7 @@
         </div>
         <div class="exec-grid">
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/harvey-roddenberry.webp" alt="Harvey Roddenberry" loading="lazy"></div>
             <h3>Harvey Roddenberry</h3>
             <div class="exec-role">Chairman / President</div>
             <dl class="exec-fields">
@@ -823,10 +839,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited here at UGA is the community that we have created in the events that we get to put on, such as Sportsman's Night Out and the banquet!&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/nick-tootle.webp" alt="Nick Tootle" loading="lazy"></div>
             <h3>Nick Tootle</h3>
             <div class="exec-role">Co-Chairman / Vice President</div>
             <dl class="exec-fields">
@@ -836,10 +849,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited is being able to meet like-minded people that you would have never crossed paths with otherwise.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/brooks-weeks.webp" alt="Brooks Weeks" loading="lazy"></div>
             <h3>Brooks Weeks</h3>
             <div class="exec-role">Operations Chairman</div>
             <dl class="exec-fields">
@@ -849,10 +859,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited is the collective action we all take to protect what we love hunting the most, and how it brings us closer as waterfowl hunters. Also, how we can come together and collaborate on techniques and practices to support the United States duck population.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/hayden-roberson.webp" alt="Hayden Roberson" loading="lazy"></div>
             <h3>Hayden Roberson</h3>
             <div class="exec-role">Finance Chair</div>
             <dl class="exec-fields">
@@ -862,10 +869,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing is the silent auction at the banquet.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/walker-johnston.webp" alt="Walker Johnston" loading="lazy"></div>
             <h3>Walker Johnston</h3>
             <div class="exec-role">Conservation Chair</div>
             <dl class="exec-fields">
@@ -875,10 +879,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited is getting to be part of a group that not only cares about conservation, but also provides a community of amazing friends.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/noah-fetner.webp" alt="Noah Fetner" loading="lazy"></div>
             <h3>Noah Fetner</h3>
             <div class="exec-role">Outreach Chairman</div>
             <dl class="exec-fields">
@@ -888,10 +889,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited is knowing that the money we raise goes back into protecting wetlands and waterfowl habitat.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/heath-owen.webp" alt="Heath Owen" loading="lazy"></div>
             <h3>Heath Owen</h3>
             <div class="exec-role">Merchandise Chairman</div>
             <dl class="exec-fields">
@@ -901,10 +899,7 @@
             <blockquote class="exec-quote">&ldquo;The community that we have created. Being around like-minded people who share a passion for the outdoors, hunting, and conservation.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/walker-layne.webp" alt="Walker Layne" loading="lazy"></div>
             <h3>Walker Layne</h3>
             <div class="exec-role">Co-Social Media Chair</div>
             <dl class="exec-fields">
@@ -914,10 +909,7 @@
             <blockquote class="exec-quote">&ldquo;My favorite thing about Ducks Unlimited is being surrounded by people who share my passion for the outdoors and are committed to conservation.&rdquo;</blockquote>
           </div>
           <div class="exec-card">
-            <div class="exec-photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <span>Add photo</span>
-            </div>
+            <div class="exec-photo has-photo"><img src="images/exec/jack-helton.webp" alt="Jack Helton" loading="lazy"></div>
             <h3>Jack Helton</h3>
             <div class="exec-role">Co-Social Media Chair</div>
             <dl class="exec-fields">
@@ -1075,27 +1067,27 @@
         <div class="sponsor-tier tier-silver">
           <h3 class="tier-label">Silver sponsors</h3>
           <div class="sponsor-row">
-            <div class="sponsor-card"><img src="images/sponsors/alpha-gamma-rho.svg" alt="Alpha Gamma Rho" loading="lazy"></div>
+            <a class="sponsor-card sponsor-link" href="https://www.alphagammarho.org/" target="_blank" rel="noopener noreferrer" aria-label="Alpha Gamma Rho website (opens in a new tab)" title="Visit Alpha Gamma Rho"><img src="images/sponsors/alpha-gamma-rho.svg" alt="Alpha Gamma Rho" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
             <div class="sponsor-card is-name"><span class="sponsor-name">Bo Roberts</span></div>
-            <div class="sponsor-card is-name"><span class="sponsor-name">Butt Hutt</span></div>
-            <div class="sponsor-card is-name"><span class="sponsor-name">CWS LLC</span></div>
+            <a class="sponsor-card sponsor-link" href="https://www.butthuttathens.com/" target="_blank" rel="noopener noreferrer" aria-label="Butt Hutt website (opens in a new tab)" title="Visit Butt Hutt"><img src="images/sponsors/butt-hutt.webp" alt="Butt Hutt" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://cwselectrical.com/" target="_blank" rel="noopener noreferrer" aria-label="CWS Electrical website (opens in a new tab)" title="Visit CWS Electrical"><img src="images/sponsors/cws-electrical.webp" alt="CWS Electrical Contractors" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
             <div class="sponsor-card is-name"><span class="sponsor-name">Keith Miller</span></div>
             <div class="sponsor-card is-name"><span class="sponsor-name">Lang Mills</span></div>
             <div class="sponsor-card is-name"><span class="sponsor-name">Paul Simmons</span></div>
             <div class="sponsor-card is-name"><span class="sponsor-name">Phillip Archer</span></div>
             <div class="sponsor-card is-name"><span class="sponsor-name">Phillip Hancock</span></div>
-            <div class="sponsor-card is-name"><span class="sponsor-name">Sporting Arms</span></div>
+            <a class="sponsor-card sponsor-link" href="https://www.sportingarmsinc.com/" target="_blank" rel="noopener noreferrer" aria-label="Sporting Arms website (opens in a new tab)" title="Visit Sporting Arms"><img src="images/sponsors/sporting-arms.webp" alt="Sporting Arms" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
           </div>
         </div>
 
         <div class="sponsor-tier tier-bronze">
           <h3 class="tier-label">Bronze sponsors</h3>
           <div class="sponsor-row">
-            <div class="sponsor-card"><img src="images/sponsors/dick-fergusons.webp" alt="Dick Ferguson&#x27;s" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/dogwatch.svg" alt="DogWatch of Central Georgia" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/duck-head.webp" alt="Duck Head" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/poncho.svg" alt="Poncho" loading="lazy"></div>
-            <div class="sponsor-card is-name"><span class="sponsor-name">Burnmoor Clothing</span></div>
+            <a class="sponsor-card sponsor-link" href="https://dickfergusons.com/" target="_blank" rel="noopener noreferrer" aria-label="Dick Ferguson&#x27;s website (opens in a new tab)" title="Visit Dick Ferguson&#x27;s"><img src="images/sponsors/dick-fergusons.webp" alt="Dick Ferguson&#x27;s" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://www.dogwatch.com/dealer/dogwatch-of-central-georgia/" target="_blank" rel="noopener noreferrer" aria-label="DogWatch of Central Georgia website (opens in a new tab)" title="Visit DogWatch of Central Georgia"><img src="images/sponsors/dogwatch.svg" alt="DogWatch of Central Georgia" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://www.duckhead.com/" target="_blank" rel="noopener noreferrer" aria-label="Duck Head website (opens in a new tab)" title="Visit Duck Head"><img src="images/sponsors/duck-head.webp" alt="Duck Head" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://ponchooutdoors.com/" target="_blank" rel="noopener noreferrer" aria-label="Poncho website (opens in a new tab)" title="Visit Poncho"><img src="images/sponsors/poncho.svg" alt="Poncho" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://shopburnmoor.com/" target="_blank" rel="noopener noreferrer" aria-label="Burnmoor Clothing website (opens in a new tab)" title="Visit Burnmoor Clothing"><img src="images/sponsors/burnmoor.webp" alt="Burnmoor Clothing" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
             <div class="sponsor-card is-name"><span class="sponsor-name">C.R. Chisholm</span></div>
             <div class="sponsor-card is-name"><span class="sponsor-name">Stuart Pate</span></div>
           </div>
@@ -1129,12 +1121,12 @@
         <div class="sponsor-tier tier-donor">
           <h3 class="tier-label">Merchandise donors</h3>
           <div class="sponsor-row">
-            <div class="sponsor-card"><img src="images/sponsors/gunner-kennels.webp" alt="Gunner Kennels" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/orvis.svg" alt="Orvis" loading="lazy"></div>
-            <div class="sponsor-card on-dark"><img src="images/sponsors/slayer-calls.svg" alt="Slayer Calls" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/toadfish.webp" alt="Toadfish" loading="lazy"></div>
-            <div class="sponsor-card"><img src="images/sponsors/vortex-optics.svg" alt="Vortex Optics" loading="lazy"></div>
-            <div class="sponsor-card is-name"><span class="sponsor-name">Prairie Road Iron Works</span></div>
+            <a class="sponsor-card sponsor-link" href="https://gunner.com/" target="_blank" rel="noopener noreferrer" aria-label="Gunner Kennels website (opens in a new tab)" title="Visit Gunner Kennels"><img src="images/sponsors/gunner-kennels.webp" alt="Gunner Kennels" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://www.orvis.com/" target="_blank" rel="noopener noreferrer" aria-label="Orvis website (opens in a new tab)" title="Visit Orvis"><img src="images/sponsors/orvis.svg" alt="Orvis" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link on-dark" href="https://slayercalls.com/" target="_blank" rel="noopener noreferrer" aria-label="Slayer Calls website (opens in a new tab)" title="Visit Slayer Calls"><img src="images/sponsors/slayer-calls.svg" alt="Slayer Calls" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://toadfish.com/" target="_blank" rel="noopener noreferrer" aria-label="Toadfish website (opens in a new tab)" title="Visit Toadfish"><img src="images/sponsors/toadfish.webp" alt="Toadfish" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://vortexoptics.com/" target="_blank" rel="noopener noreferrer" aria-label="Vortex Optics website (opens in a new tab)" title="Visit Vortex Optics"><img src="images/sponsors/vortex-optics.svg" alt="Vortex Optics" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
+            <a class="sponsor-card sponsor-link" href="https://www.pri-ks.com/" target="_blank" rel="noopener noreferrer" aria-label="Prairie Road Ironworks website (opens in a new tab)" title="Visit Prairie Road Ironworks"><img src="images/sponsors/prairie-road-iron-works.webp" alt="Prairie Road Ironworks" loading="lazy"><span class="visit-tag" aria-hidden="true">Visit site &#8599;</span></a>
           </div>
         </div>
       </div>
@@ -1270,11 +1262,16 @@
 
     function getMonthEvents(year, month){
       var events = [];
-      // Every month in the school-year range gets recurring meetings
-      var d2 = nthWeekdayInMonth(year, month, 4, 2); // 2nd Thursday
-      var d4 = nthWeekdayInMonth(year, month, 4, 4); // 4th Thursday
-      if(d2) events.push({ day: d2, label: "Meeting", color: "var(--mallard)" });
-      if(d4) events.push({ day: d4, label: "Meeting", color: "var(--mallard)" });
+      // General meetings: every other Tuesday, counted from FIRST_MEETING.
+      // To change the schedule, set FIRST_MEETING to the date of any real meeting (year, month 0-11, day).
+      var FIRST_MEETING = new Date(2026, 7, 18); // Tue Aug 18, 2026
+      var daysInThisMonth = new Date(year, month + 1, 0).getDate();
+      for(var dd = 1; dd <= daysInThisMonth; dd++){
+        var dt = new Date(year, month, dd);
+        if(dt.getDay() !== 2 || dt < FIRST_MEETING) continue;
+        var weeks = Math.round((dt - FIRST_MEETING) / (7 * 24 * 3600 * 1000));
+        if(weeks % 2 === 0) events.push({ day: dd, label: "Meeting", color: "var(--mallard)" });
+      }
 
       if(month === 8){ // September — habitat workday, 2nd Saturday
         var w = nthWeekdayInMonth(year, month, 6, 2);
@@ -1371,7 +1368,7 @@
     if(!ticker || !slide || !textEl || !dotsBtn) return;
 
     var items = [
-      { text: "General meetings every other week, 6 PM at the fire pit", page: "events" },
+      { text: "General meetings every other Tuesday, 6 PM at the fire pit", page: "events" },
       { text: "Fall habitat workday — grab your gloves", page: "events" },
       { text: "Chapter banquet this fall — details coming soon", page: "events" },
       { text: "New members always welcome", page: "join" },
